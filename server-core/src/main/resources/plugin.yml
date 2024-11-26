@@ -1,0 +1,4 @@
+main: io.github.mythoid.smp.shortcake.ServerCore
+name: Shortcake-ServerCore
+version: 1.0.0
+api-version: 1.21.3

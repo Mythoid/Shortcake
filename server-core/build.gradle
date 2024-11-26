@@ -1,0 +1,72 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.bukkit.plugin.PluginDescriptionFile
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'papermc'
+            url = 'https://repo.papermc.io/repository/maven-public'
+        }
+    }
+    dependencies {
+        classpath 'io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'io.freefair.lombok' version '8.10.2'
+    id 'com.gradleup.shadow' version '8.3.2'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public'
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup("maven.modrinth")
+        }
+    }
+}
+
+dependencies {
+    compileOnly 'io.papermc.paper:paper-api:1.21.3-R0.1-SNAPSHOT'
+    implementation 'net.kyori:adventure-nbt:4.17.0'
+
+    compileOnly 'maven.modrinth:xaeros-minimap:24.6.1_Fabric_1.21'
+    compileOnly 'maven.modrinth:VoxelMap-Updated:1.21.2-1.14'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+group = 'io.github.mythoid.smp.shortcake'
+
+def pluginYaml = new PluginDescriptionFile(file('src/main/resources/plugin.yml').newInputStream())
+version = String.join("+", (pluginYaml.APIVersion ? pluginYaml.APIVersion : "legacy"), pluginYaml.version).concat("-SNAPSHOT")
+
+String artifactBaseName = group.split("\\.").last() + '-server-core'
+
+tasks.withType(Jar).configureEach {
+    archiveBaseName = artifactBaseName
+}
+
+tasks.named('shadowJar', ShadowJar) {
+    relocate('net.kyori.examination', 'shadow.shortcake.examination')
+    relocate('net.kyori.adventure', 'shadow.shortcake.adventure') {
+        include 'net.kyori.adventure.nbt.*'
+    }
+}
