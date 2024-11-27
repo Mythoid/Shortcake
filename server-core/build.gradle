@@ -45,6 +45,7 @@ dependencies {
 
     compileOnly 'maven.modrinth:xaeros-minimap:24.6.1_Fabric_1.21'
     compileOnly 'maven.modrinth:VoxelMap-Updated:1.21.2-1.14'
+    compileOnly 'maven.modrinth:JourneyMap:1.21.3-6.0.0-beta.29+fabric'
 }
 
 java {

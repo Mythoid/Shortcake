@@ -1,6 +1,7 @@
 package io.github.mythoid.smp.shortcake.messages;
 
 import io.github.mythoid.smp.shortcake.ServerCore;
+import io.github.mythoid.smp.shortcake.messages.handlers.JourneyMapMessageHandler;
 import io.github.mythoid.smp.shortcake.messages.handlers.VoxelMapMessageHandler;
 import io.github.mythoid.smp.shortcake.messages.handlers.XaeroMessageHandler;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +18,7 @@ public class ChannelRegistry {
         channelsToHandlers.put("xaeroworldmap:main", new XaeroMessageHandler(plugin));
         channelsToHandlers.put("xaerominimap:main", new XaeroMessageHandler(plugin));
         channelsToHandlers.put("voxelmap:settings", new VoxelMapMessageHandler(plugin));
+        channelsToHandlers.put("journeymap:perm_req", new JourneyMapMessageHandler(plugin));
     }
 
     public HashMap<String, MessageHandler> getHandlers() {
