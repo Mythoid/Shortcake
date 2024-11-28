@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 public class MessageUtil {
 
-    public static byte[] toMCProtocolString(String s) {
+    public static byte[] toMCProtocolString(final String s) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.write(varInt(s.length()));
         out.write(s.getBytes(StandardCharsets.UTF_8));
